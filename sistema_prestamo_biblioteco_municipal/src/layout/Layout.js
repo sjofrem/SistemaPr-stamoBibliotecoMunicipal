@@ -1,12 +1,22 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { Menubar } from "primereact/menubar";
-import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
 
 const Layout = () => {
 
-	const start = <img alt="logo" src="https://primefaces.org/cdn/primereact/images/logo.png" height="40" className="mr-2"></img>;
-	const end = <InputText placeholder="Search" type="text" className="w-full" />;
+	const start =
+	<div className="flex gap-2 align-items-center">
+		<span className="font-bold text-lg">
+			SmartLib
+		</span>
+		<i className="pi pi-book" style={{ fontSize: "1.5rem" }} />
+	</div>;
+	const end =
+	<div className="flex gap-2 align-items-center">
+		<Button icon="pi pi-shopping-cart" rounded text aria-label="Cart" />
+		<Button icon="pi pi-user" rounded text aria-label="User" />
+	</div>;
 
 	return (
 		<div className="App">
