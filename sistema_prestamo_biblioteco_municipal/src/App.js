@@ -7,14 +7,9 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 
-import { Login } from "./pages/Login/Login";
 import Layout from "./layout/Layout";
-
-const Main = () => {
-	return (
-		<div> Hola </div>
-	);
-};
+import { Login } from "./pages/Login/Login";
+import { Home } from "./pages/Home/Home";
 
 const getRouter = () => createBrowserRouter([
 	{
@@ -23,7 +18,7 @@ const getRouter = () => createBrowserRouter([
 		children: [
 			{
 				path: "/",
-				element: <Main />
+				element: <Home />
 			},
 			{
 				path: "/login",
