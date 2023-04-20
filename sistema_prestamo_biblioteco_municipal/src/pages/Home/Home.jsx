@@ -116,7 +116,7 @@ export const Home = () => {
 			<div className="flex flex-column md:flex-row md:justify-content-between gap-2">
 				<span className="p-input-icon-left">
 					<i className="pi pi-search" />
-					<InputText value={globalFilterValue} onChange={onFilter} placeholder="Search by Name" />
+					<InputText value={globalFilterValue} onChange={onFilter} placeholder="Buscar por Nombre" />
 				</span>
 				<DataViewLayoutOptions layout={layout} onChange={(e) => setLayout(e.value)} />
 			</div>
