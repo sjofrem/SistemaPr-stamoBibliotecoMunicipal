@@ -9,6 +9,7 @@ import "primeicons/primeicons.css";
 
 import Layout from "./layout/Layout";
 import { Login } from "./pages/Login/Login";
+import { AdminCatalog } from "./pages/AdminCatalog/AdminCatalog";
 import { Home } from "./pages/Home/Home";
 
 const getRouter = () => createBrowserRouter([
@@ -27,6 +28,10 @@ const getRouter = () => createBrowserRouter([
 			{
 				path: "/Libros",
 				element: <Login />,
+			},
+			{
+				path: "/admin_catalog",
+				element: <AdminCatalog />,
 			}
 		]
 	}
