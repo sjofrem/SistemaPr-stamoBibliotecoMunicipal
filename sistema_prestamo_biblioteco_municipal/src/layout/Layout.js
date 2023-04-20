@@ -15,7 +15,7 @@ const Layout = () => {
 	</Button>;
 	const end =
 	<div className="flex gap-2 align-items-center">
-		<Button icon="pi pi-shopping-cart" rounded text aria-label="Cart" />
+		<Button icon="pi pi-shopping-cart" rounded text aria-label="Cart" onClick={() => navigate("/cart")}/>
 		<Button icon="pi pi-user" rounded text aria-label="User" onClick={() => navigate("/login")}/>
 	</div>;
 
