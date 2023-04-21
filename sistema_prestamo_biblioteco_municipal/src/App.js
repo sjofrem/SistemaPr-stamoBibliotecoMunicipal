@@ -41,7 +41,7 @@ const getRouter = () => createBrowserRouter([
 				element: <BookRequests />,
 			},
 			{
-				path: "/admin_catalog",
+				path: "/admin-catalog",
 				element: <AdminCatalog />,
 			}
 		]
