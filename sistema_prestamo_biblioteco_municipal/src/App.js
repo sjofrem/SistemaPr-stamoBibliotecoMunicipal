@@ -10,7 +10,10 @@ import "primeicons/primeicons.css";
 import Layout from "./layout/Layout";
 import { Login } from "./pages/Login/Login";
 import { AdminCatalog } from "./pages/AdminCatalog/AdminCatalog";
+import { Register } from "./pages/Register/Register";
 import { Home } from "./pages/Home/Home";
+import Cart from "./pages/Cart/Cart";
+import { BookRequests } from "./pages/BookRequests/BookRequests";
 
 const getRouter = () => createBrowserRouter([
 	{
@@ -26,8 +29,16 @@ const getRouter = () => createBrowserRouter([
 				element: <Login />,
 			},
 			{
-				path: "/Libros",
-				element: <Login />,
+				path: "/register",
+				element: <Register />,
+			},
+			{
+				path: "/cart",
+				element: <Cart />,
+			},
+			{
+				path: "/book-requests",
+				element: <BookRequests />,
 			},
 			{
 				path: "/admin_catalog",
