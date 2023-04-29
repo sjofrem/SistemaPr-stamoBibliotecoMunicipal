@@ -31,6 +31,7 @@ const getRouter = () => createBrowserRouter([
 			{
 				path: "/register",
 				element: <Register />,
+				
 			},
 			{
 				path: "/cart",
