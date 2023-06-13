@@ -1,39 +1,39 @@
-const { Student } = require("./models/Student.js");
+const { User } = require("./models/User.js");
 
 // GraphQL Resolvers
 const resolvers = {
     Query: {
         hello: () => "Hello from Reflectoring Blog",
         welcome: (parent, args) => `Hello ${args.name}`,
-        students: async () => await Student.find({}), // return array of students
-        student: async (parent, args) => await Student.findById(args.id), // return student by id
+        users: async () => await User.find({}), // return array of users
+        user: async (parent, args) => await User.findById(args.id), // return user by id
     },
     Mutation: {
-        create: async (parent, args) => {
+        createUser: async (parent, args) => {
             const { firstName, lastName, age } = args;
-            const newStudent = new Student({
+            const newUser = new User({
                 firstName,
                 lastName,
                 age,
             });
-            await newStudent.save();
-            return newStudent;
-    },
-        update: async (parent, args) => {
-            const { id } = args;
-            const updatedStudent = await Student.findByIdAndUpdate(id, args);
-            if (!updatedStudent) {
-                throw new Error(`Student with ID ${id} not found`);
-            }
-            return updatedStudent;
+            await newUser.save();
+            return newUser;
         },
-        delete: async (parent, args) => {
+        updateUser: async (parent, args) => {
             const { id } = args;
-            const deletedStudent = await Student.findByIdAndDelete(id);
-            if (!deletedStudent) {
-                throw new Error(`Student with ID ${id} not found`);
+            const updatedUser = await User.findByIdAndUpdate(id, args);
+            if (!updatedUser) {
+                throw new Error(`User with ID ${id} not found`);
             }
-            return deletedStudent;
+            return updatedUser;
+        },
+        deleteUser: async (parent, args) => {
+            const { id } = args;
+            const deletedUser = await User.findByIdAndDelete(id);
+            if (!deletedUser) {
+                throw new Error(`User with ID ${id} not found`);
+            }
+            return deletedUser;
         },
     },
 };

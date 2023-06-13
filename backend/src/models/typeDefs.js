@@ -4,19 +4,25 @@ const typeDefs = gql`
     type Query {
         hello: String
         welcome(name: String): String
-        students: [Student] #return array of students
-        student(id: ID): Student #return student by id
+        users: [User] #return array of users
+        user(id: ID): User #return user by id
     }
-    type Student {
+    type User {
         id: ID
-        firstName: String
-        lastName: String
-        age: Int
+        rut: String
+        nombres: String
+        apellidos: String
+        direccion: String
+        telefono: Int
+        mail: String
+        foto: String
+        administrador: Boolean
+        contrasena: String
     }
     type Mutation {
-        create(firstName: String, lastName: String, age: Int): Student
-        update(id: ID, firstName: String, lastName: String, age: Int): Student
-        delete(id: ID): Student
+        createUser(rut: String, nombres: String, apellidos: String, direccion: String, telefono: Int, mail: String, foto: String, administrador: Boolean, contrasena: String): User
+        updateUser(id: ID, nombres: String, apellidos: String, direccion: String, telefono: Int, mail: String, foto: String, administrador: Boolean, contrasena: String): User
+        deleteUser(id: ID): User
     }
 `;
 
