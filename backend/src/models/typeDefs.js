@@ -8,6 +8,8 @@ const typeDefs = gql`
         user(id: ID): User #return user by id
         documents: [Document] #return array of documents
         document(id: ID): Document #return document by id
+        requests: [Request] #return array of requests
+        request(id: ID): Request #return request by id
     }
     type Document {
         id: ID,
@@ -19,8 +21,6 @@ const typeDefs = gql`
         edicion: String,
         categoria: String,
         tipo_medio: String
-        requests: [Request] #return array of requests
-        request(id: ID): Request #return request by id
     }
     type User {
         id: ID
