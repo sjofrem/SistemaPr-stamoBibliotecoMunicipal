@@ -1,6 +1,8 @@
 const { User } = require("./models/User.js");
 const { Document } = require("./models/Document.js");
 const { Request } = require("./models/Request.js");
+const { Ejemplar } = require("./models/Ejemplar.js");
+const { Prestamo } = require("./models/Prestamo.js");
 
 // GraphQL Resolvers
 const resolvers = {
@@ -13,6 +15,10 @@ const resolvers = {
         document: async (parent, args) => await Document.findById(args.id), // return document by id
         requests: async () => await Request.find({}), // return array of Requests
         request: async (parent, args) => await Request.findById(args.id), // return Request by id
+        ejemplares: async () => await Ejemplar.find({}), //return array of ejemplares
+        ejemplar: async (parent,args) => await Ejemplar.findById(args.id), //return ejemplar by id
+        prestamos: async () => await Prestamo.find({}), //return array of prestamos
+        prestamo: async (parent,args) => await Prestamo.findById(args.id), //return prestamo by id
     },
     Mutation: {
         createUser: async (parent, args) => {
@@ -106,6 +112,63 @@ const resolvers = {
                 throw new Error(`Request with ID ${id} not found`);
             }
             return deletedRequest;
+        },
+        createEjemplar: async (parent, args) => {
+            const { idDocumento, estado, ubicacion } = args;
+            const newEjemplar = new Ejemplar({
+                idDocumento,
+                estado,
+                ubicacion
+            });
+            await newEjemplar.save();
+            return newEjemplar;
+        },
+        updateEjemplar: async (parent, args) => {
+            const { id } = args;
+            const updatedEjemplar = await Ejemplar.findByIdAndUpdate(id, args);
+            if (!updatedEjemplar) {
+                throw new Error(`Ejemplar with ID ${id} not found`);
+            }
+            return updatedEjemplar;
+        },
+        deleteEjemplar: async (parent, args) => {
+            const { id } = args;
+            const deletedEjemplar = await Ejemplar.findByIdAndDelete(id);
+            if (!deletedEjemplar) {
+                throw new Error(`Ejemplar with ID ${id} not found`);
+            }
+            return deletedEjemplar;
+        },
+        createPrestamo: async (parent, args) => {
+            const { tipoPrestamo, idEjemplar, fechaPrestamo, horaPrestamo, fechaDev, horaDev, fechaDevReal, horaDevReal} = args;
+            const newPrestamo = new Prestamo({
+                tipoPrestamo,
+                idEjemplar, 
+                fechaPrestamo, 
+                horaPrestamo, 
+                fechaDev, 
+                horaDev, 
+                fechaDevReal, 
+                horaDevReal
+            });
+            await newPrestamo.save();
+            return newPrestamo;
+        },
+        updatePrestamo: async (parent, args) => {
+            const { id } = args;
+            const updatedPrestamo = await Prestamo.findByIdAndUpdate(id, args);
+            if (!updatedPrestamo) {
+                throw new Error(`Prestamo with ID ${id} not found`);
+            }
+            return updatedPrestamo;
+        },
+        deletePrestamo: async (parent, args) => {
+            const { id } = args;
+            const deletedPrestamo = await Prestamo.findByIdAndDelete(id);
+            if (!deletedPrestamo) {
+                throw new Error(`Prestamo with ID ${id} not found`);
+            }
+            return deletedPrestamo;
         },
     },
 };
