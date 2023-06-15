@@ -23,8 +23,8 @@ const typeDefs = gql`
     }
     type Request {
         id: ID
-        idUsuario: String
-        idEjemplar: String
+        idUsuario: ID
+        idEjemplar: ID
         fecha: String
         hora: String
     }
@@ -32,8 +32,8 @@ const typeDefs = gql`
         createUser(rut: String, nombres: String, apellidos: String, direccion: String, telefono: Int, mail: String, foto: String, administrador: Boolean, contrasena: String): User
         updateUser(id: ID, nombres: String, apellidos: String, direccion: String, telefono: Int, mail: String, foto: String, administrador: Boolean, contrasena: String): User
         deleteUser(id: ID): User
-        createRequest(idUsuario: String, idEjemplar: String, fecha: String, hora: String): Request
-        updateRequest(id: ID, idEjemplar: String, fecha: String, hora: String): Request
+        createRequest(idUsuario: ID, idEjemplar: ID, fecha: String, hora: String): Request
+        updateRequest(id: ID, idEjemplar: ID, fecha: String, hora: String): Request
         deleteRequest(id: ID): Request
     }
 `;

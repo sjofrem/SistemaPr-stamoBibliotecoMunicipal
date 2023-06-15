@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 
+const Schema = mongoose.Schema
+const ObjectId = Schema.Types.ObjectId
 const Request = mongoose.model("Request", {
-    idUsuario: String,
-    idEjemplar: String,
+    idUsuario: ObjectId,
+    idEjemplar: ObjectId,
     fecha: String,
     hora: String
 });
