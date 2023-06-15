@@ -10,11 +10,18 @@ const resolvers = {
     },
     Mutation: {
         createUser: async (parent, args) => {
-            const { firstName, lastName, age } = args;
+            const { rut, nombres, apellidos, direccion, telefono, mail, huella, foto, administrador, contrasena} = args;
             const newUser = new User({
-                firstName,
-                lastName,
-                age,
+                rut,
+                nombres,
+                apellidos,
+                direccion,
+                telefono,
+                mail,
+                huella,
+                foto,
+                administrador,
+                contrasena
             });
             await newUser.save();
             return newUser;

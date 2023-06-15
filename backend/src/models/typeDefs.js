@@ -15,13 +15,14 @@ const typeDefs = gql`
         direccion: String
         telefono: Int
         mail: String
+        huella: String
         foto: String
         administrador: Boolean
         contrasena: String
     }
     type Mutation {
-        createUser(rut: String, nombres: String, apellidos: String, direccion: String, telefono: Int, mail: String, foto: String, administrador: Boolean, contrasena: String): User
-        updateUser(id: ID, nombres: String, apellidos: String, direccion: String, telefono: Int, mail: String, foto: String, administrador: Boolean, contrasena: String): User
+        createUser(rut: String, nombres: String, apellidos: String, direccion: String, telefono: Int, mail: String, huella: String, foto: String, administrador: Boolean, contrasena: String): User
+        updateUser(id: ID, nombres: String, apellidos: String, direccion: String, telefono: Int, mail: String, huella: String, foto: String, administrador: Boolean, contrasena: String): User
         deleteUser(id: ID): User
     }
 `;

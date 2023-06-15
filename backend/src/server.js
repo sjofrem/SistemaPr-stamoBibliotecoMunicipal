@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const { resolvers } = require("./resolvers.js");
 const { typeDefs } = require("./models/typeDefs.js");
 
-const mongoURL = "mongodb://localhost:27017/student-register";
+const mongoURL = "mongodb://localhost:27017/sistema-biblioteca";
 
 // Connect to database
 mongoose
