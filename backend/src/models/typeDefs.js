@@ -19,6 +19,8 @@ const typeDefs = gql`
         edicion: String,
         categoria: String,
         tipo_medio: String
+        requests: [Request] #return array of requests
+        request(id: ID): Request #return request by id
     }
     type User {
         id: ID
@@ -32,6 +34,13 @@ const typeDefs = gql`
         administrador: Boolean
         contrasena: String
     }
+    type Request {
+        id: ID
+        idUsuario: String
+        idEjemplar: String
+        fecha: String
+        hora: String
+    }
     type Mutation {
         #User
         createUser(rut: String, nombres: String, apellidos: String, direccion: String, telefono: Int, mail: String, foto: String, administrador: Boolean, contrasena: String): User
@@ -41,6 +50,9 @@ const typeDefs = gql`
         createDocument(id: ID, tipo: String, titulo: String, autor: String, editorial: String, ano: Int, edicion: String, categoria: String, tipo_medio: String): Document
         updateDocument(id: ID, tipo: String, titulo: String, autor: String, editorial: String, ano: Int, edicion: String, categoria: String, tipo_medio: String): Document
         deleteDocument(id: ID): Document
+        createRequest(idUsuario: String, idEjemplar: String, fecha: String, hora: String): Request
+        updateRequest(id: ID, idEjemplar: String, fecha: String, hora: String): Request
+        deleteRequest(id: ID): Request
     }
 `;
 
