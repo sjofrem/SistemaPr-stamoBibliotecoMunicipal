@@ -4,7 +4,10 @@ const mongoose = require("mongoose");
 const { resolvers } = require("./resolvers.js");
 const { typeDefs } = require("./models/typeDefs.js");
 
-const mongoURL = "mongodb://localhost:27017/sistema-biblioteca";
+const { populateDatabase } = require("./populate.js");
+
+const databaseName = "sistema-biblioteca";
+const mongoURL = `mongodb://localhost:27017/${databaseName}`;
 
 // Connect to database
 mongoose
@@ -14,6 +17,9 @@ mongoose
     })
     .then(() => {
         console.log(`Database connected!`);
+        
+        // Populate database
+        populateDatabase();
     })
     .catch(err => {
         console.log(err.message);

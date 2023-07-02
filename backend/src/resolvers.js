@@ -55,7 +55,7 @@ const resolvers = {
             return deletedUser;
         },
         createDocument: async (parent, args) => {
-            const { tipo, titulo, autor, editorial, ano, edicion, categoria, tipo_medio } = args;
+            const { titulo, autor, editorial, ano, edicion, categoria, imagen, estado, tipo_medio } = args;
             const newDocument = new Document({
                 tipo, 
                 titulo, 
@@ -63,7 +63,9 @@ const resolvers = {
                 editorial, 
                 ano, 
                 edicion, 
-                categoria, 
+                categoria,
+                imagen,
+                estado,
                 tipo_medio
             });
             await newDocument.save();
