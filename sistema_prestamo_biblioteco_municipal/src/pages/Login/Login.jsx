@@ -2,9 +2,37 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import React from "react";
+import { useQuery, gql } from "@apollo/client";
+
+const GET_USERS = gql`
+  {
+    users {
+		id
+		rut
+		nombres
+		apellidos
+		direccion
+		telefono
+		mail
+		huella
+		foto
+		administrador
+		contrasena
+	  }
+  }
+`;
+
+const Users = () => {
+	const { loading, error, data } = useQuery(GET_USERS);
+
+	if (loading) return <p>Cargando...</p>;
+	if (error) return <p>Error :</p>;
+	console.log(data);
+};
 
 export const Login = () => {
 	const navigate = useNavigate();
+	Users();
 	return (
 		<>
 			<div className="px-5 min-h-screen flex justify-content-center align-items-center">

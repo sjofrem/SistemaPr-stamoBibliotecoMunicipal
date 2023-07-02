@@ -15,6 +15,14 @@ import { Home } from "./pages/Home/Home";
 import Cart from "./pages/Cart/Cart";
 import { BookRequests } from "./pages/BookRequests/BookRequests";
 
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+
+// Configura Apollo Client
+const client = new ApolloClient({
+	uri: "http://localhost:4000/", // Reemplaza esto por tu endpoint de GraphQL
+	cache: new InMemoryCache()
+});
+
 const getRouter = () => createBrowserRouter([
 	{
 		element: <Layout />,
@@ -65,13 +73,15 @@ function App() {
 
 	if (!routerInfo.router) return null;
 	return (
-		<RouterProvider
-			key={routerInfo.idx} router={routerInfo.router} fallbackElement={
-				<div>
+		<ApolloProvider client={client}>
+			<RouterProvider
+				key={routerInfo.idx} router={routerInfo.router} fallbackElement={
+					<div>
                     ...
-				</div>
-			}
-		/>
+					</div>
+				}
+			/>
+		</ApolloProvider>
 	);
 }
 
