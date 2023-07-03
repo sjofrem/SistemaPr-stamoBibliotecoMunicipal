@@ -2,9 +2,13 @@ import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Menubar } from "primereact/menubar";
 import { Button } from "primereact/button";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 
 const Layout = () => {
 	const navigate = useNavigate();
+	const {userLoggedIn} = useContext(UserContext);
+	console.log(userLoggedIn);
 
 	const start =
 	<Button className="flex gap-2 align-items-center" text onClick={() => navigate("/")}>

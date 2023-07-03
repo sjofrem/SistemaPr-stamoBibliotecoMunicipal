@@ -17,6 +17,8 @@ import { BookRequests } from "./pages/BookRequests/BookRequests";
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
+import { UserProvider } from "./contexts/UserContext";
+
 // Configura Apollo Client
 const client = new ApolloClient({
 	uri: "http://localhost:4000/", // Reemplaza esto por tu endpoint de GraphQL
@@ -73,15 +75,17 @@ function App() {
 
 	if (!routerInfo.router) return null;
 	return (
-		<ApolloProvider client={client}>
-			<RouterProvider
-				key={routerInfo.idx} router={routerInfo.router} fallbackElement={
-					<div>
+		<UserProvider>
+			<ApolloProvider client={client}>
+				<RouterProvider
+					key={routerInfo.idx} router={routerInfo.router} fallbackElement={
+						<div>
                     ...
-					</div>
-				}
-			/>
-		</ApolloProvider>
+						</div>
+					}
+				/>
+			</ApolloProvider>
+		</UserProvider>
 	);
 }
 
