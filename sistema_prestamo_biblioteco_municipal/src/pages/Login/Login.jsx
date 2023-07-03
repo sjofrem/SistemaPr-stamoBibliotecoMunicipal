@@ -3,6 +3,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
+import { useFormik } from "formik";
 
 const GET_USERS = gql`
   {
@@ -22,17 +23,40 @@ const GET_USERS = gql`
   }
 `;
 
-const Users = () => {
-	const { loading, error, data } = useQuery(GET_USERS);
-
-	if (loading) return <p>Cargando...</p>;
-	if (error) return <p>Error :</p>;
-	console.log(data);
-};
-
 export const Login = () => {
 	const navigate = useNavigate();
-	Users();
+	const formik = useFormik({
+		initialValues: {
+			nombres: "",
+			rut: "",
+			apellidos: "",
+			direccion: "",
+			telefono: "",
+			mail: "",
+			huella: "",
+			foto: "",
+			administrador: false,
+			contrasena: ""
+		},
+		validate: (data) => {
+			let errors = {};
+
+			if (!data.nombres) {
+				errors.nombres = "Name is required.";
+			}
+
+			return errors;
+		},
+		onSubmit: (data) => {
+			data.telefono = parseInt(data.telefono);
+			const { data: dataUsers } = useQuery(GET_USERS);
+			console.log(dataUsers);
+			
+			navigate("/");
+
+			formik.resetForm();
+		}
+	});
 	return (
 		<>
 			<div className="px-5 min-h-screen flex justify-content-center align-items-center">

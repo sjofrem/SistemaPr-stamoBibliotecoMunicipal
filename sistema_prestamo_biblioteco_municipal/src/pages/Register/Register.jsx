@@ -5,6 +5,7 @@ import React from "react";
 import { useFormik } from "formik";
 
 import { gql, useMutation } from "@apollo/client";
+import { useEffect } from "react";
 
 const CREATE_USER = gql`
 mutation CreateUser($rut: String, $nombres: String, $apellidos: String, $direccion: String, $telefono: Int, $mail: String, $huella: String, $foto: String, $administrador: Boolean, $contrasena: String) {
@@ -27,7 +28,13 @@ mutation CreateUser($rut: String, $nombres: String, $apellidos: String, $direcci
 export const Register = () => {
 	const navigate = useNavigate();
 
-	const [createUser, { createData }] = useMutation(CREATE_USER);
+	const [createUser, { data: createData, error }] = useMutation(CREATE_USER);
+
+	useEffect(() => {
+		if (error) {
+			console.log(error.message);
+		}
+	}, [error]);
 
 	const formik = useFormik({
 		initialValues: {
@@ -52,10 +59,12 @@ export const Register = () => {
 			return errors;
 		},
 		onSubmit: (data) => {
-			data.telefono = 
-			createUser({ variables: { data } });
-			console.log(createData);
-			// navigate("/");
+			data.telefono = parseInt(data.telefono);
+			createUser({ variables: data });
+			if (createData) {
+				console.log(createData);
+			}
+			navigate("/");
 
 			formik.resetForm();
 		}
