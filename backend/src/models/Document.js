@@ -3,14 +3,14 @@ const mongoose = require("mongoose");
 const ObjectId = Schema.Types.ObjectId */
 
 const Document = mongoose.model("Document", {
-    //id: ObjectId,
-    tipo: String,
     titulo: String,
     autor: String,
     editorial: String,
     ano: Number,
     edicion: String,
     categoria: String,
+    imagen: String,
+    estado: String,
     tipo_medio: String
 });
 

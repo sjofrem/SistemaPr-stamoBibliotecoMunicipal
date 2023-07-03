@@ -17,13 +17,14 @@ const typeDefs = gql`
     }
     type Document {
         id: ID,
-        tipo: String,
         titulo: String,
         autor: String,
         editorial: String,
         ano: Int,
         edicion: String,
         categoria: String,
+        imagen: String,
+        estado: String,
         tipo_medio: String
     }
     type User {
@@ -69,8 +70,8 @@ const typeDefs = gql`
         updateUser(id: ID, nombres: String, apellidos: String, direccion: String, telefono: Int, mail: String, huella: String, foto: String, administrador: Boolean, contrasena: String): User
         deleteUser(id: ID): User
         #Document
-        createDocument(id: ID, tipo: String, titulo: String, autor: String, editorial: String, ano: Int, edicion: String, categoria: String, tipo_medio: String): Document
-        updateDocument(id: ID, tipo: String, titulo: String, autor: String, editorial: String, ano: Int, edicion: String, categoria: String, tipo_medio: String): Document
+        createDocument(id: ID, titulo: String, autor: String, editorial: String, ano: Int, edicion: String, categoria: String, imagen: String, estado: String, tipo_medio: String): Document
+        updateDocument(id: ID, titulo: String, autor: String, editorial: String, ano: Int, edicion: String, categoria: String, imagen: String, estado: String, tipo_medio: String): Document
         deleteDocument(id: ID): Document
         #Request
         createRequest(idUsuario: ID, idEjemplar: ID, fecha: String, hora: String): Request
