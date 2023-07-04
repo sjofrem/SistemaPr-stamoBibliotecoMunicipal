@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -8,6 +8,22 @@ import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import { FileUpload } from "primereact/fileupload";
 import { useRef } from "react";
+import { useQuery, gql } from "@apollo/client";
+
+const GET_PRESTAMOS = gql`
+query Prestamo {
+	prestamos {
+	  apellido
+	  documentos
+	  fechaDevolucion
+	  fechaDevolucionReal
+	  fechaPrestamo
+	  id
+	  modalidad
+	  nombre
+	}
+  }
+`;
 
 export const BookRequests = () => {
 	const [displayRequestForm, setDisplayRequestForm] = useState(false);
@@ -16,45 +32,56 @@ export const BookRequests = () => {
 	const onUpload = () => {
 		toast.current.show({ severity: "info", summary: "Success", detail: "File Uploaded" });
 	};
-	const bookRequests = [
-		{
-			nombre: "Sebastián",
-			apellidos: "Jofré Machuca",
-			documentos: ["Cálculo Tomo 1", "Cálculo Diferencial"],
-			modalidad: "Presencial",
-			fechaInicio: "20-04-2023",
-			fechaTermino: "27-04-2023"
-		}
-	];
+	// const bookRequests = [
+	// 	{
+	// 		nombre: "Sebastián",
+	// 		apellidos: "Jofré Machuca",
+	// 		documentos: ["Cálculo Tomo 1", "Cálculo Diferencial"],
+	// 		modalidad: "Presencial",
+	// 		fechaInicio: "20-04-2023",
+	// 		fechaTermino: "27-04-2023"
+	// 	}
+	// ];
+	const [bookRequests, setBookRequests] = useState([]);
 	const footer = (
 		<div>
 			<Button label="Ingresar" aria-label="Submit" className="w-full" onClick={() => setDisplayRequestForm(false)} />
 		</div>
 	);
 
+	// const { loading, error, data } = useQuery(GET_PRESTAMOS);
+	const { data } = useQuery(GET_PRESTAMOS);	
+	useEffect(()=>{
+		if(data != undefined){
+			setBookRequests(data?.prestamos);
+		}
+	},[data]);
+	// if (loading) return "Loading...";
+	// if (error) return <pre>{error.message}</pre>;
+	// console.log("hola", data?.prestamos);
 
 	return (
 		<div>
 			<div className="card">
 				<DataTable value={bookRequests} responsiveLayout="scroll">
 					<Column field="nombre" header="Nombre"></Column>
-					<Column field="apellidos" header="Apellidos"></Column>
+					<Column field="apellido" header="Apellidos"></Column>
 					<Column field="documentos" header="Documentos" body={(rowData) => {
 						return(
 							<>
-								{rowData.documentos.map((document, index) => {
-									return(
-										<div key={index}>
-											{document}
-										</div>
-									);
-								})}
+								{rowData?.documentos.split(";").map((docu)=>{
+									return(<>
+										<div>{docu}</div>
+									</>);
+								})
+								
+								}  
 							</>
 						);
 					}}></Column>
 					<Column field="modalidad" header="Modalidad"></Column>
-					<Column field="fechaInicio" header="Fecha inicio"></Column>
-					<Column field="fechaTermino" header="Fecha final"></Column>
+					<Column field="fechaPrestamo" header="Fecha inicio"></Column>
+					<Column field="fechaDevolucion" header="Fecha final"></Column>
 					<Column header="Acciones" body={(rowData) => {
 						console.log(rowData);
 						return(

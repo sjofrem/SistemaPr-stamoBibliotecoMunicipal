@@ -4,14 +4,13 @@ const Schema = mongoose.Schema
 const ObjectId = Schema.Types.ObjectId
 
 const Prestamo = mongoose.model("Prestamo", {
-    tipoPrestamo: String, 
-    idEjemplar: ObjectId, 
-    fechaPrestamo: String, 
-    horaPrestamo: String, 
-    fechaDev: String, 
-    horaDev: String, 
-    fechaDevReal: String, 
-    horaDevReal: String
+    apellido: String,
+    documentos: String,
+    fechaDevolucion: String, 
+    fechaDevolucionReal: String, 
+    fechaPrestamo: String,  
+    modalidad: String, 
+    nombre: String
 });
 
 module.exports = { Prestamo };

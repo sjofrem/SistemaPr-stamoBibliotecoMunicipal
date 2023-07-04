@@ -1,5 +1,6 @@
-const { Document } = require("./models/Document.js");
+const { Document} = require("./models/Document.js");
 const { User } = require("./models/User.js");
+const {Prestamo} = require("./models/Prestamo.js");
 
 function populateDatabase() {
     // Populate documents
@@ -58,6 +59,30 @@ function populateDatabase() {
             tipo_medio: "libro"
         });
         newDocument.save();
+    });
+
+    Prestamo.deleteMany({}).exec().then(() => {
+        let newPrestamo = new Prestamo({
+            apellido: "Jofré Machuca",
+            documentos: "Cálculo Tomo 1;Cálculo Diferencial",
+            fechaDevolucion: "08-07-2023", 
+            fechaDevolucionReal: null, 
+            fechaPrestamo: "01-07-2023",  
+            modalidad: "Presencial", 
+            nombre: "Sebastián"
+        });
+        newPrestamo.save();
+
+        newPrestamo = new Prestamo({
+            apellido: "Rojas Calderón",
+            documentos: "Aplicaciones de calculo diferencial",
+            fechaDevolucion: "17-06-2023", 
+            fechaDevolucionReal: null, 
+            fechaPrestamo: "24-06-2023",  
+            modalidad: "Remoto", 
+            nombre: "Etienne"
+        });
+        newPrestamo.save();
     });
 }
 

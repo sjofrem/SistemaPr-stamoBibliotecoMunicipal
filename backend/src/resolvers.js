@@ -142,16 +142,15 @@ const resolvers = {
             return deletedEjemplar;
         },
         createPrestamo: async (parent, args) => {
-            const { tipoPrestamo, idEjemplar, fechaPrestamo, horaPrestamo, fechaDev, horaDev, fechaDevReal, horaDevReal} = args;
+            const { apellido, documentos, fechaDevolucion, fechaDevolucionReal, fechaPrestamo, modalidad, nombre } = args;
             const newPrestamo = new Prestamo({
-                tipoPrestamo,
-                idEjemplar, 
-                fechaPrestamo, 
-                horaPrestamo, 
-                fechaDev, 
-                horaDev, 
-                fechaDevReal, 
-                horaDevReal
+                apellido,
+                documentos,
+                fechaDevolucion,
+                fechaDevolucionReal,
+                fechaPrestamo,
+                modalidad,
+                nombre
             });
             await newPrestamo.save();
             return newPrestamo;
