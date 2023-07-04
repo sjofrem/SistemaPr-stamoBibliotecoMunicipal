@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import {ColumnGroup} from "primereact/columngroup";
@@ -20,15 +19,6 @@ const GET_CATALOG = gql`
 			imagen
 			estado
 			titulo
-		}
-		ejemplares {
-			estado
-			ubicacion
-			id
-		}
-		prestamos {
-			tipoPrestamo
-			idEjemplar
 		}
 	}
 `;
@@ -72,95 +62,35 @@ export const AdminCatalog = () => {
 
 	let headerGroup = <ColumnGroup>
 		<Row>
-			<Column header="Título" frozen sortable/>
-			<Column header="Autor" sortable/>
-			<Column header="Categoria" sortable/>
-			<Column header="Editorial" sortable />
-			<Column header="Edición" sortable />
-			<Column header="Año" sortable />
-			<Column header="Stock" sortable />
-			<Column header="Disponibles" sortable />
-			<Column header="P. sala" sortable />
-			<Column header="P. domicilio" sortable />
+			<Column header="Título" frozen sortable field="titulo"/>
+			<Column header="Autor" sortable field="author"/>
+			<Column header="Categoria" sortable field="category"/>
+			<Column header="Editorial" sortable field="editorial"/>
+			<Column header="Edición" sortable field="edition"/>
+			<Column header="Año" sortable field="year"/>
+			<Column header="Stock" sortable field="stock"/>
+			<Column header="Disponibles" sortable field="available"/>
+			<Column header="P. sala" sortable field="psala"/>
+			<Column header="P. domicilio" sortable field="pdomicilio"/>
 			<Column header="Acciones" alignFrozen="right" frozen colSpan={2}/>
 		</Row>
 	</ColumnGroup>;
-	console.log(data.ejemplares);
+	console.log(data.documents);
 	return (
 		<div className="card">
-			<DataTable  value={filteredValue || data} headerColumnGroup={headerGroup} header={header()} editMode="row" sortField="name" sortOrder={-1} removableSort showGridlines stripedRows tableStyle={{ minWidth: "50rem" }} scrollable paginator rows={9} >
-				<Column frozen  style={{ width: "10%" }} body={(rowdata)=>{
-					return (
-						<div>
-							{rowdata.documents.document.titulo}
-						</div>
-					);
-				}}></Column>
-				<Column style={{ width: "20%" }} body={(rowdata)=>{
-					return (
-						<div>
-							{rowdata.documents.document.autor}
-						</div>
-					);
-				}}></Column>
-				<Column style={{ width: "20%" }} body={(rowdata)=>{
-					return (
-						<div>
-							{rowdata.documents.document.categoria}
-						</div>
-					);
-				}}></Column>
-				<Column style={{ width: "20%" }} body={(rowdata)=>{
-					return (
-						<div>
-							{rowdata.documents.document.editorial}
-						</div>
-					);
-				}}></Column>
-				<Column style={{ width: "20%" }} body={(rowdata)=>{
-					return (
-						<div>
-							{rowdata.documents.document.edicion}
-						</div>
-					);
-				}}></Column>
-				<Column style={{ width: "20%" }} body={(rowdata)=>{
-					return (
-						<div>
-							{rowdata.documents.document.ano}
-						</div>
-					);
-				}}></Column>
-				<Column style={{ width: "20%" }} body={(rowdata)=>{
-					return (
-						<div>
-							{rowdata.ejemplares.ejemplar.estado}
-						</div>
-					);
-				}}></Column>
-				<Column style={{ width: "20%" }} body={(rowdata)=>{
-					return (
-						<div>
-							{rowdata.ejemplares.ejemplar.ubicacion}
-						</div>
-					);
-				}}></Column>
-				<Column style={{ width: "20%" }} body={(rowdata)=>{
-					return (
-						<div>
-							{rowdata.prestamos.prestamo.tipoPrestamo}
-						</div>
-					);
-				}}></Column>
-				<Column style={{ width: "20%" }} body={(rowdata)=>{
-					return (
-						<div>
-							{rowdata.prestamos.length}
-						</div>
-					);
-				}}></Column>
+			<DataTable  value={filteredValue || data.documents} headerColumnGroup={headerGroup} header={header()} editMode="row" sortField="name" sortOrder={-1} removableSort showGridlines stripedRows tableStyle={{ minWidth: "50rem" }} scrollable paginator rows={9} >
+				<Column field="titulo" frozen  style={{ width: "10%" }}>{document.titulo}</Column>
+				<Column field="autor"  style={{ width: "20%" }}>{document.autor}</Column>
+				<Column field="categoria" style={{ width: "20%" }}>{document.categoria}</Column>
+				<Column field="editorial" style={{ width: "20%" }}>{document.editorial}</Column>
+				<Column field="edicion"  style={{ width: "20%" }}>{document.edicion}</Column>
+				<Column field="ano" style={{ width: "20%" }}>{document.ano}</Column>
+				<Column field="stock" style={{ width: "20%" }}></Column>
+				<Column field="available"  style={{ width: "20%" }}></Column>
+				<Column field="psala"  style={{ width: "20%" }}></Column>
+				<Column field="pdomicilio"  style={{ width: "20%" }}></Column>
 				<Column rowEditor alignFrozen="right" frozen headerStyle={{ minWidth: "8rem" }}> </Column>
-				<Column alignFrozen="right" frozen body={<Button icon="pi pi-trash" />} rowSpan={2}></Column>
+				<Column alignFrozen="right" frozen body={<i className="pi pi-trash" />} rowSpan={2}></Column>
 			</DataTable>
 		</div>
 	);
