@@ -5,17 +5,20 @@ export const UserContext = React.createContext();
 
 export const UserProvider = ({ children }) => {
 	const [userLoggedIn, setUserLoggedIn] = useState(false);
+	const [userAdmin, setUserAdmin] = useState(false);
 	const [shoppingCart, setShoppingCart] = useState([]);
 
 	const value = useMemo(() => {
 		return {
 			userLoggedIn,
 			setUserLoggedIn,
+			userAdmin,
+			setUserAdmin,
 			shoppingCart,
 			setShoppingCart
 
 		};
-	}, [userLoggedIn, shoppingCart]);
+	}, [userLoggedIn, userAdmin, shoppingCart]);
 
 	return (
 		<UserContext.Provider value={value}>

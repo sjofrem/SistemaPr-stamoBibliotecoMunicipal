@@ -1,6 +1,23 @@
 const { Document } = require("./models/Document.js");
+const { User } = require("./models/User.js");
 
 function populateDatabase() {
+    // Populate documents
+    User.deleteMany({}).exec().then(() => {
+        let newAdmin = new User({
+            nombres: "Admin",
+			rut: "0",
+			apellidos: "Admin",
+			direccion: "usm",
+			telefono: 1234567,
+			mail: "admin@usm.cl",
+			huella: "huella",
+			foto: "foto",
+			administrador: true,
+			contrasena: "admin"
+        });
+        newAdmin.save();
+    });
     // Populate documents
     Document.deleteMany({}).exec().then(() => {
         let newDocument = new Document({
