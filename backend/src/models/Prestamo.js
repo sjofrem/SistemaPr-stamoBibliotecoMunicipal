@@ -10,7 +10,8 @@ const Prestamo = mongoose.model("Prestamo", {
     fechaDevolucionReal: String, 
     fechaPrestamo: String,  
     modalidad: String, 
-    nombre: String
+    nombre: String,
+    estado: String
 });
 
 module.exports = { Prestamo };
