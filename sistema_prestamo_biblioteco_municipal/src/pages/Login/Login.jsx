@@ -28,7 +28,7 @@ const GET_USERS = gql`
 export const Login = () => {
 	const navigate = useNavigate();
 	const { data: dataUsers } = useQuery(GET_USERS);
-	const {setUserLoggedIn, setUserAdmin} = useContext(UserContext);
+	const {setUserLoggedIn, setUserAdmin, setCurrentUser} = useContext(UserContext);
 	//console.log(dataUsers);
 	const formik = useFormik({
 		initialValues: {
@@ -42,6 +42,7 @@ export const Login = () => {
 				let searchUser = dataUsers.users.find((user) => user.mail === data.email && user.contrasena === data.password);
 				if (searchUser !== undefined){
 					setUserLoggedIn(true);
+					setCurrentUser(searchUser);
 					if (searchUser.administrador === true){
 						setUserAdmin(true);
 					}

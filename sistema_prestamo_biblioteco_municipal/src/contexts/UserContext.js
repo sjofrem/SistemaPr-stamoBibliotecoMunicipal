@@ -7,6 +7,7 @@ export const UserProvider = ({ children }) => {
 	const [userLoggedIn, setUserLoggedIn] = useState(false);
 	const [userAdmin, setUserAdmin] = useState(false);
 	const [shoppingCart, setShoppingCart] = useState([]);
+	const [currentUser, setCurrentUser] = useState(undefined);
 
 	const value = useMemo(() => {
 		return {
@@ -15,10 +16,12 @@ export const UserProvider = ({ children }) => {
 			userAdmin,
 			setUserAdmin,
 			shoppingCart,
-			setShoppingCart
+			setShoppingCart,
+			currentUser,
+			setCurrentUser
 
 		};
-	}, [userLoggedIn, userAdmin, shoppingCart]);
+	}, [userLoggedIn, userAdmin, shoppingCart, currentUser]);
 
 	return (
 		<UserContext.Provider value={value}>
