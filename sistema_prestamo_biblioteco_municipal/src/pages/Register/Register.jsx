@@ -6,6 +6,8 @@ import { useFormik } from "formik";
 
 import { gql, useMutation } from "@apollo/client";
 import { useEffect } from "react";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
 const CREATE_USER = gql`
 mutation CreateUser($rut: String, $nombres: String, $apellidos: String, $direccion: String, $telefono: Int, $mail: String, $huella: String, $foto: String, $administrador: Boolean, $contrasena: String) {
@@ -29,12 +31,17 @@ export const Register = () => {
 	const navigate = useNavigate();
 
 	const [createUser, { data: createData, error }] = useMutation(CREATE_USER);
+	const {setUserLoggedIn} = useContext(UserContext);
 
 	useEffect(() => {
 		if (error) {
-			console.log(error.message);
+			alert(error.message);
+		} else if (createData) {
+			setUserLoggedIn(true);
+			console.log(createData);
+			navigate("/");
 		}
-	}, [error]);
+	}, [error, createData, navigate]);
 
 	const formik = useFormik({
 		initialValues: {
@@ -60,12 +67,7 @@ export const Register = () => {
 		},
 		onSubmit: (data) => {
 			data.telefono = parseInt(data.telefono);
-			createUser({ variables: data });
-			if (createData) {
-				console.log(createData);
-			}
-			navigate("/");
-
+			createUser({ variables: { ...data } });
 			formik.resetForm();
 		}
 	});

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Menubar } from "primereact/menubar";
 import { Button } from "primereact/button";
@@ -7,7 +7,7 @@ import { UserContext } from "../contexts/UserContext";
 
 const Layout = () => {
 	const navigate = useNavigate();
-	const {userLoggedIn} = useContext(UserContext);
+	const {userLoggedIn, setUserLoggedIn, userAdmin} = useContext(UserContext);
 	console.log(userLoggedIn);
 
 	const start =
@@ -19,11 +19,20 @@ const Layout = () => {
 	</Button>;
 	const end =
 	<div className="flex gap-2 align-items-center">
-		<Button icon="pi pi-list" rounded text aria-label="Admin catalog" onClick={() => navigate("/admin-catalog")}/>
-		<Button icon="pi pi-book" rounded text aria-label="Requests" onClick={() => navigate("/book-requests")}/>
-		<Button icon="pi pi-shopping-cart" rounded text aria-label="Cart" onClick={() => navigate("/cart")}/>
-		<Button icon="pi pi-user" rounded text aria-label="User" onClick={() => navigate("/login")}/>
+		{userLoggedIn && userAdmin ? <Button icon="pi pi-list" rounded text aria-label="Admin catalog" onClick={() => navigate("/admin-catalog")}/>: null}
+		{userLoggedIn && userAdmin ? <Button icon="pi pi-book" rounded text aria-label="Requests" onClick={() => navigate("/book-requests")}/>: null}
+		{userLoggedIn ? <Button icon="pi pi-shopping-cart" rounded text aria-label="Cart" onClick={() => navigate("/cart")}/>: null}
+		{userLoggedIn ? <Button icon="pi pi-sign-out" rounded text aria-label="User" onClick={() => {
+			setUserLoggedIn(false);
+			navigate("/login");
+		}}/>: <Button icon="pi pi-user" rounded text aria-label="User" onClick={() => navigate("/login")}/>}
 	</div>;
+
+	useEffect(() => {
+		if (!userLoggedIn){
+			navigate("/login");
+		}
+	},[userLoggedIn]);
 
 	return (
 		<div className="App">

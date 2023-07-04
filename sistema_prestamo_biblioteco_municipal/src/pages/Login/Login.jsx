@@ -4,6 +4,8 @@ import { InputText } from "primereact/inputtext";
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
 import { useFormik } from "formik";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
 const GET_USERS = gql`
   {
@@ -25,35 +27,28 @@ const GET_USERS = gql`
 
 export const Login = () => {
 	const navigate = useNavigate();
+	const { data: dataUsers } = useQuery(GET_USERS);
+	const {setUserLoggedIn, setUserAdmin} = useContext(UserContext);
+	//console.log(dataUsers);
 	const formik = useFormik({
 		initialValues: {
-			nombres: "",
-			rut: "",
-			apellidos: "",
-			direccion: "",
-			telefono: "",
-			mail: "",
-			huella: "",
-			foto: "",
-			administrador: false,
-			contrasena: ""
-		},
-		validate: (data) => {
-			let errors = {};
-
-			if (!data.nombres) {
-				errors.nombres = "Name is required.";
-			}
-
-			return errors;
+			email: "",
+			password: ""
 		},
 		onSubmit: (data) => {
-			data.telefono = parseInt(data.telefono);
-			const { data: dataUsers } = useQuery(GET_USERS);
-			console.log(dataUsers);
-			
-			navigate("/");
-
+			console.log("Form submitted");
+			console.log(data);
+			if (dataUsers && dataUsers.users) {
+				let searchUser = dataUsers.users.find((user) => user.mail === data.email && user.contrasena === data.password);
+				if (searchUser !== undefined){
+					setUserLoggedIn(true);
+					if (searchUser.administrador === true){
+						setUserAdmin(true);
+					}
+				} else {
+					alert("Usuario no existe");
+				}
+			}
 			formik.resetForm();
 		}
 	});
@@ -66,15 +61,19 @@ export const Login = () => {
 						<span className="text-600 font-medium">Por favor, introduzca sus datos</span>
 					</div>
 					<div className="flex flex-column">
-						<span className="p-input-icon-left w-full mb-4">
-							<i className="pi pi-envelope"></i>
-							<InputText id="email" type="text" className="w-full md:w-25rem" placeholder="Email" />
-						</span>
-						<span className="p-input-icon-left w-full mb-4">
-							<i className="pi pi-lock"></i>
-							<InputText id="password" type="password" className="w-full md:w-25rem" placeholder="Contraseña" />
-						</span>
-						<Button label="Ingresar" className="w-full" onClick={() => navigate("/")}></Button>
+						<form onSubmit={formik.handleSubmit} className="p-fluid">
+							<span className="p-input-icon-left w-full mb-4">
+								<i className="pi pi-envelope"></i>
+								<InputText id="email" type="text" className="w-full md:w-25rem" placeholder="Email" value={formik.values.email} onChange={formik.handleChange}/>
+								<label htmlFor="email" className="font-semibold ml-3"/>
+							</span>
+							<span className="p-input-icon-left w-full mb-4">
+								<i className="pi pi-lock"></i>
+								<InputText id="password" type="password" className="w-full md:w-25rem" placeholder="Contraseña" value={formik.values.password} onChange={formik.handleChange}/>
+								<label htmlFor="password" className="font-semibold ml-3"/>
+							</span>
+							<Button label="Ingresar" className="w-full" type="submit"></Button>
+						</form>
 						<div className="flex gap-3 pt-3">
 							<span className="text-600 font-medium">{"¿No tienes cuenta?"}</span>
 							<a className="text-600 cursor-pointer hover:text-primary cursor-pointer ml-auto transition-colors transition-duration-300" onClick={() => navigate("/register")}>Crear una cuenta</a>
