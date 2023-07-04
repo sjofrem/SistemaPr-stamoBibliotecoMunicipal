@@ -46,6 +46,7 @@ export const Login = () => {
 					if (searchUser.administrador === true){
 						setUserAdmin(true);
 					}
+					navigate("/");
 				} else {
 					alert("Usuario no existe");
 				}

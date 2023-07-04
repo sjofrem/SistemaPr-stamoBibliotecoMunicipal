@@ -69,7 +69,8 @@ function populateDatabase() {
             fechaDevolucionReal: null, 
             fechaPrestamo: "01-07-2023",  
             modalidad: "Presencial", 
-            nombre: "Sebastián"
+            nombre: "Sebastián",
+            estado: "Por Aprobar"
         });
         newPrestamo.save();
 
@@ -80,7 +81,8 @@ function populateDatabase() {
             fechaDevolucionReal: null, 
             fechaPrestamo: "24-06-2023",  
             modalidad: "Remoto", 
-            nombre: "Etienne"
+            nombre: "Etienne",
+            estado: "Por Aprobar"
         });
         newPrestamo.save();
     });

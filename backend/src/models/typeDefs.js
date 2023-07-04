@@ -61,7 +61,8 @@ const typeDefs = gql`
         fechaDevolucionReal: String, 
         fechaPrestamo: String,  
         modalidad: String, 
-        nombre: String
+        nombre: String,
+        estado: String
     }
     type Mutation {
         #User
@@ -81,8 +82,8 @@ const typeDefs = gql`
         updateEjemplar(id: ID, idDocumento: ID, estado: String, ubicacion: String): Ejemplar
         deleteEjemplar(id: ID): Ejemplar
         #Prestamo
-        createPrestamo(apellido: String, documentos: String, fechaDevolucion: String, fechaDevolucionReal: String, fechaPrestamo: String, modalidad: String, nombre: String): Prestamo
-        updatePrestamo(id: ID, fechaDevolucionReal: String): Prestamo
+        createPrestamo(apellido: String, documentos: String, fechaDevolucion: String, fechaDevolucionReal: String, fechaPrestamo: String, modalidad: String, nombre: String, estado:String): Prestamo
+        updatePrestamo(id: ID, estado: String): Prestamo
         deletePrestamo(id: ID): Prestamo
     }
 `;

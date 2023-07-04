@@ -8,7 +8,7 @@ import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import { FileUpload } from "primereact/fileupload";
 import { useRef } from "react";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useMutation } from "@apollo/client";
 
 const GET_PRESTAMOS = gql`
 query Prestamo {
@@ -21,6 +21,17 @@ query Prestamo {
 	  id
 	  modalidad
 	  nombre
+	  estado
+	}
+  }
+`;
+
+
+const UPDATE_QUERY = gql`
+mutation Mutation($estado: String, $updatePrestamoId: ID) {
+	updatePrestamo(estado: $estado, id: $updatePrestamoId) {
+	  estado
+	  id
 	}
   }
 `;
@@ -28,6 +39,26 @@ query Prestamo {
 export const BookRequests = () => {
 	const [displayRequestForm, setDisplayRequestForm] = useState(false);
 	const toast = useRef(null);
+	const [updatePrestamo, { data: updateData, error }] = useMutation(UPDATE_QUERY);
+
+	useEffect(() => {
+		if (error) {
+			alert(error.message);
+		} else if (updateData) {
+			console.log(updateData);
+		}
+	}, [error]);
+
+	function updateRow(estado, id){
+		let data = {
+			estado: estado,
+			updatePrestamoId: id
+		};
+		if (id !== undefined){
+			updatePrestamo({ variables: { ...data } }
+			);
+		}
+	}
 
 	const onUpload = () => {
 		toast.current.show({ severity: "info", summary: "Success", detail: "File Uploaded" });
@@ -58,7 +89,7 @@ export const BookRequests = () => {
 	},[data]);
 	// if (loading) return "Loading...";
 	// if (error) return <pre>{error.message}</pre>;
-	// console.log("hola", data?.prestamos);
+	console.log("hola", data?.prestamos);
 
 	return (
 		<div>
@@ -83,13 +114,15 @@ export const BookRequests = () => {
 					<Column field="fechaPrestamo" header="Fecha inicio"></Column>
 					<Column field="fechaDevolucion" header="Fecha final"></Column>
 					<Column header="Acciones" body={(rowData) => {
-						console.log(rowData);
+						console.log(rowData.id);
 						return(
 							<div>
-								<Button label="Ingresar" aria-label="Submit" onClick={() => setDisplayRequestForm(true)} />
+								<Button icon="pi pi-check" rounded text aria-label="Admin catalog" onClick={() => updateRow("Aprobar", rowData.id)}/>
+								<Button icon="pi pi-times" rounded text aria-label="Admin catalog" onClick={() => updateRow("Rechazar", rowData.id)}/>
 							</div>
 						);
 					}}></Column>
+					<Column field="estado" header="Estado"></Column>
 				</DataTable>
 			</div>
 			<Dialog header="Solicitud" visible={displayRequestForm} style={{ width: "50vw" }} onHide={() => setDisplayRequestForm(false)} footer={footer}>
