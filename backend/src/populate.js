@@ -1,6 +1,7 @@
 const { Document} = require("./models/Document.js");
 const { User } = require("./models/User.js");
 const {Prestamo} = require("./models/Prestamo.js");
+const {Ejemplar} = require("./models/Ejemplar.js");
 
 function populateDatabase() {
     // Populate documents
@@ -85,6 +86,19 @@ function populateDatabase() {
             estado: "Por Aprobar"
         });
         newPrestamo.save();
+    });
+    Ejemplar.deleteMany({}).exec().then(() => {
+        let newAdmin = new Ejemplar({
+            estado: "Disponible",
+            ubicación: "XD_09"
+        });
+        newAdmin.save();
+
+        newAdmin = new Ejemplar({
+            estado: "Prestado",
+            ubicación: "XP_09"
+        });
+        newAdmin.save();
     });
 }
 
