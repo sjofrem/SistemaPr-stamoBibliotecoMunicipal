@@ -102,7 +102,7 @@ export const BookRequests = () => {
 							<>
 								{rowData?.documentos.split(";").map((docu)=>{
 									return(<>
-										<div>{docu}</div>
+										<div key={docu.id}>{docu}</div>
 									</>);
 								})
 								
