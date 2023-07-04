@@ -6,6 +6,8 @@ import { InputText } from "primereact/inputtext";
 import { Dialog } from "primereact/dialog";
 import { Image } from "primereact/image";
 import { useQuery, gql } from "@apollo/client";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
 const GET_CATALOG = gql`
 	query Documents {
@@ -29,6 +31,7 @@ export const Home = () => {
 	const [globalFilterValue, setGlobalFilterValue] = useState("");
 	const [filteredValue, setFilteredValue] = useState(null);
 	const [displayDetails, setDisplayDetails] = useState(false);
+	const {shoppingCart, setShoppingCart} = useContext(UserContext);
 
 	const getSeverity = (document) => {
 		switch (document.estado) {
@@ -80,7 +83,11 @@ export const Home = () => {
 						<img className="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round" src={document.imagen} alt={document.titulo} />
 						<div className="text-2xl font-bold text-center">{document.titulo}</div>
 						<div className="text-lg font-semibold text-center">{document.autor}</div>
-						<Button icon="pi pi-shopping-cart" className="p-button-rounded" disabled={document.estado === "OUTOFSTOCK"}></Button>
+						<Button icon="pi pi-shopping-cart" className="p-button-rounded" disabled={document.estado === "OUTOFSTOCK" || shoppingCart.includes(document.id)} onClick={
+							() => {
+								setShoppingCart((shoppingCart) => [...shoppingCart, document.id]);
+							}}>
+						</Button>
 						<Button icon="pi pi-ellipsis-h" className="p-button-rounded" onClick={()=>setDisplayDetails(true)}></Button>
 					</div>
 				</div>
