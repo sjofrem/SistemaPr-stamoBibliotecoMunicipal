@@ -20,7 +20,7 @@ Y luego:
 npm run dev
 ```
 
-# Para hacer login en modo admin:
+### Para hacer login en modo admin:
 ```
 Email: admin@usm.cl
 Contraseña: admin
